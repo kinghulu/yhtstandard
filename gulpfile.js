@@ -35,7 +35,7 @@ gulp.task('sass',['cleanTmp'], function () {
 //修正浏览器前缀
 gulp.task('autofx',['sass'], function () {
     return gulp.src(".tmp/css/*.css")
-        //.pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(autoprefixer({
             browsers: ['last 2 versions', 'Android >= 4.0'],
             cascade: true, //是否美化属性值 默认：true 像这样：
@@ -43,7 +43,7 @@ gulp.task('autofx',['sass'], function () {
             //        transform: rotate(45deg);
             remove:true //是否去掉不必要的前缀 默认：true 
         }))
-        //.pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(u_css));
 });
 
@@ -92,11 +92,13 @@ gulp.task('imagemin', function () {
 //压缩js
 gulp.task('jsmin', function () {
     return gulp.src(u_js+'*.js')
+        .pipe(sourcemaps.init())
         .pipe(uglify({
             mangle: true//类型：Boolean 默认：true 是否修改变量名
             ,compress: true//类型：Boolean 默认：true 是否完全压缩
             //,preserveComments: 'all' //保留所有注释
         }))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(dist+'/js'));
 });
 
