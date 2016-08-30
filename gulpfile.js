@@ -32,6 +32,7 @@ gulp.task('sass',['cleanTmp'], function () {
     .pipe(reload({stream: true}));
 });
 
+
 //修正浏览器前缀
 gulp.task('autofx',['sass'], function () {
     return gulp.src(".tmp/css/*.css")
@@ -129,14 +130,14 @@ gulp.task('copydevhtml', function () {
 
 
 // 监视文件改动并重新载入
-gulp.task('serve',['sass'],function() {
+gulp.task('serve',['autofx'],function() {
     browserSync({
         server: {
             baseDir: 'app'
         }
     });
     gulp.watch([u_app+'*.html', u_css+'**/*.css', u_js+'**/*.js'], reload);
-    gulp.watch([u_sass+'**/*.scss'],['sass']);
+    gulp.watch([u_sass+'**/*.scss'],['autofx']);
 });
 
 // 拷贝目录开发版
